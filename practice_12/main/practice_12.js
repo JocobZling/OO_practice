@@ -10,7 +10,7 @@ class Class {
         if (Student.klass === this.number) {
             this.leader = Student.name;
             for (let teather of this.teathers) {
-                teather.classInform(Student.name, this.number, 'leader');
+                teather.print(Student.name, this.number, 'leader');
             }
         }
         else {
@@ -22,12 +22,12 @@ class Class {
         Student.klass = this.number;
         Student.inClass = this;
         for (let teather of this.teathers) {
-            teather.classInform(Student.name, this.number, 'join');
+            teather.print(Student.name, this.number, 'join');
         }
     }
 
-    isIn(student) {
-        if (student.klass === this.number)
+    isIn(Student) {
+        if (Student.klass === this.number)
             return true;
         else
             return false;
@@ -70,21 +70,18 @@ class Teacher extends Person {
     }
 
     introduce() {
-        let klassesSum = "";
-        let result = "";
-        for (let index = 0; index < this.klasses.length; index++) {
-            if (index === this.klasses.length - 1)
-                klassesSum += this.klasses[index].number;
-            else
-                klassesSum += this.klasses[index].number + ',';
+        let classString = "";
+        if (this.klasses.length == 0 || this.klasses == null) {
+            classString = 'No Class';
+        } else {
+            let Class="Class ";
+            let classArr = [];
+            for (let klass of this.klasses) {
+                classArr.push(klass.number);
+            }
+            classString = Class+classArr.join(',');
         }
-        if (this.klasses.length === 0)
-            result = super.introduce() + ' I am a Teacher. I teach No Class.';
-        else {
-            result = super.introduce() + ` I am a Teacher. I teach Class ${klassesSum}.`;
-
-        }
-        return result;
+        return `${super.introduce()} I am a Teacher. I teach ${classString}.`;
     }
 
     introduceWith(Student) {
@@ -106,8 +103,9 @@ class Teacher extends Person {
         }
         return false;
     }
-    //打印學生進入和成為了leader老师的打印
-    classInform(student, klass, action) {
+
+    //打印學生進入和成為了leader老师的打印(合并)
+    print(student, klass, action) {
         if (action === 'join') {
             console.log(`I am ${this.name}. I know ${student} has joined Class ${klass}.`)
         }
