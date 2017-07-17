@@ -1,4 +1,14 @@
 'use strict'
+class Class {
+    constructor(number) {
+        this.number = number;
+        this.leader = "";
+    }
+
+    assignLeader(Student) {
+        this.leader = Student.name;
+    }
+}
 class Person {
     constructor(id, name, age) {
         this.id = id;
@@ -10,24 +20,15 @@ class Person {
         return "My name is " + this.name + ". I am " + this.age + " years old."
     }
 }
-class Class {
-    constructor(number) {
-        this.number = number;
-    }
-
-    assignLeader(Student) {
-        this.leader = Student.name;
-        return this.leader;
-    }
-}
 class Student extends Person {
-    constructor(id, name, age, klass) {
+    constructor(id, name, age, Class) {
         super(id, name, age);
-        this.klass = klass;
+        this.klass = Class.number;
+        this.inClass = Class;
     }
 
     introduce() {
-        if (Class.leader===this.name) {//没传进来
+        if (this.inClass.leader == this.name) {
             return super.introduce() + " I am a Student. I am Leader of Class " + this.klass + "."
         }
         else {
@@ -51,7 +52,7 @@ class Teacher extends Person {
     }
 
     introduceWith(Student) {
-        if (Student.klass ==this.klass) {
+        if (Student.klass == this.klass) {
             return "My name is " + this.name + ". I am " + this.age + " years old. I am a Teacher. I teach "
                 + Student.name + ".";
         }
@@ -63,9 +64,8 @@ class Teacher extends Person {
     }
 }
 let a = new Class("2");
-let student = new Student(1, "Tom", "21", a.number);
-a.assignLeader(student);
-let b = a.leader;
-let output = student.introduce();
-console.log(b);
-console.log(output);
+let student1 = new Student(10, "Tom", "21", a);
+a.assignLeader(student1)
+let student2 = new Student(11, "Jerry", "22", a);
+console.log(student1.introduce());
+console.log(student2.introduce());
